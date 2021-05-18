@@ -1,0 +1,63 @@
+services:
+    web:
+        image: treydwg/nginx:latest
+        container_name: ${DOCKER_CONTAINER_PREFIX}-nginx
+        volumes:
+            - ${DOCKER_NGINX_CONF_FILE}:/etc/nginx/templates/template.template
+            - ${DOCKER_NGINX_CONF_SERVER_FILE}:/etc/nginx/conf.d/default.conf
+            - ./app:/app
+        ports:
+            - ${DOCKER_NGINX_DEV_PORT}:80
+        environment: 
+            - DOCKER_NGINX_HOST=${DOCKER_NGINX_HOST}
+            - DOCKER_NGINX_PORT=${DOCKER_NGINX_PORT}
+        links:
+            - "db:database"
+        networks:
+            common: 
+    php:
+        image: treydwg/php7.4-fpm-alpine:latest
+        container_name: ${DOCKER_CONTAINER_PREFIX}-php
+        environment:
+            HOSTNAME: php
+        volumes:
+            - ./php/php-custom-config.ini:/usr/local/etc/php/conf.d/php-custom-config.ini
+            - ${DOCKER_PHP_INI_FILE}:/usr/local/etc/php/conf.d/php-env-config.ini
+            - ./php/fpm-www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./app:/app
+        links: 
+            - "db:database"
+        networks:
+            common: 
+
+    db:
+        image: postgres
+        container_name: ${DOCKER_CONTAINER_PREFIX}-postgres
+        restart: always
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
+        ports:
+            - "${DOCKER_POSTGRES_LOCAL_PORT}:${DOCKER_POSTGRES_CONTAINER_PORT}"
+        environment: 
+            POSTGRES_DB: ${DOCKER_POSTGRES_DB}
+            POSTGRES_USER: ${DOCKER_POSTGRES_USER}
+            POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD}
+        networks:
+            common: 
+    
+    pgadmin:
+        container_name: ${DOCKER_CONTAINER_PREFIX}-pgadmin
+        image: treydwg/pgadmin
+        volumes:
+            - ./pgadmin-backups:/var/lib/pgadmin
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${DOCKER_PGADMIN_DEFAULT_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${DOCKER_PGADMIN_DEFAULT_PASSWORD}
+        ports:
+        - "5050:80"
+        networks:
+            common:
+networks:
+    common:
+    
