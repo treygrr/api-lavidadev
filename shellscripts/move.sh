@@ -1,0 +1,1 @@
+docker exec lvd-nginx bash -c "mv /app/lvd/{.,}* /app"

@@ -1,0 +1,1 @@
+docker exec lvd-nginx bash -c "cd ../app && composer install"

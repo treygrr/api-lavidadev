@@ -1,0 +1,1 @@
+docker exec lvd-nginx bash -c "chmod -R a+rwx ./app && chmod -R 777 ./app"

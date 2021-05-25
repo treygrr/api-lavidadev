@@ -1,0 +1,1 @@
+docker exec lvd-nginx bash -c "rm -R ./app/lvd"

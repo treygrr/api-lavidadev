@@ -1,0 +1,1 @@
+docker exec lvd-nginx bash -c "composer create-project laravel/laravel /app/lvd"
