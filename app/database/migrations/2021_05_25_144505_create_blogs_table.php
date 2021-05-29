@@ -17,8 +17,8 @@ class CreateBlogsTable extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->text('content');
+            $table->bigInteger('author');
             $table->foreign('author')->references('id')->on('users');
-            $table->foreign('cover_photo')->references('id')->on('images');
             $table->timestamps();
         });
     }

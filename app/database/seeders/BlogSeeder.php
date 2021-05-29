@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use App\Models\Blog;
+
 class BlogSeeder extends Seeder
 {
     /**
@@ -13,6 +15,6 @@ class BlogSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Blog::factory(100)->create();
     }
 }

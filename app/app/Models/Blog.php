@@ -8,5 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     use HasFactory;
-    
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    } 
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
+    }
 }
