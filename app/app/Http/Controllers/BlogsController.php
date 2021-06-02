@@ -15,7 +15,7 @@ class BlogsController extends Controller
      */
     public function index()
     {
-        return Blog::with('tags')->with('image')->paginate();
+        return Blog::with('tags')->with('image')->paginate(5);
     }
 
     /**
@@ -47,7 +47,10 @@ class BlogsController extends Controller
      */
     public function show($id)
     {
-        //
+        $return = Blog::whereId($id)->with('tags')->with('image')->first();
+        $return->user;
+        return $return;
+
     }
 
     /**
