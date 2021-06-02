@@ -9,6 +9,12 @@ class Blog extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['author'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'author');
+    }
     public function tags()
     {
         return $this->hasMany(Tag::class);
@@ -18,4 +24,6 @@ class Blog extends Model
     {
         return $this->hasOne(Image::class);
     }
+
+    // TODO: Add categories
 }
