@@ -24,3 +24,5 @@ Route::middleware('auth:api')->get('/login', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::resource('blog', BlogsController::class);
+
+Route::middleware('auth:sanctum')->get('/test', [BlogsController::class, 'index']);
